@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>dev.bhuvan.release_notes</id>
   <name>Release Notes Generator</name>
-  <version>1.0</version>
+  <version>1.1</version>
   <vendor email="mail@bhuvan.dev" url="http://bhuvan.dev">Bhuvanesh</vendor>
 
   <description><![CDATA[
@@ -9,7 +9,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      Initial Release. Just create release notes by clicking Build|Create release
+      fixes error while creating release notes with a brach name has /
     ]]>
   </change-notes>
 

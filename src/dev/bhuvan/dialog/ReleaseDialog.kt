@@ -82,7 +82,9 @@ class ReleaseDialog(private val project: Project) : DialogWrapper(project, true)
 
     private fun collectAndSaveData() {
         try {
-            val branch = (File(root) exec "git branch --show-current").replace("\n", "")
+            val branch = (File(root) exec "git branch --show-current")
+                    .replace("\n", "")
+                    .replace("/","_")
             val ciPath = File("${root}/.ci")
             if (!ciPath.exists()) {
                 val isCreated = ciPath.mkdir()
@@ -108,7 +110,9 @@ class ReleaseDialog(private val project: Project) : DialogWrapper(project, true)
 
     private fun readAndDisplayReleaseNotes() {
         try {
-            val branch = (File(root) exec "git branch --show-current").replace("\n", "")
+            val branch = (File(root) exec "git branch --show-current")
+                    .replace("\n", "")
+                    .replace("/","_")
             val releaseNotes = File("${root}/.ci/${branch}_release.json")
             if (releaseNotes.exists()) {
                 val notes = Gson().fromJson(releaseNotes.readText(), ReleaseNotesModel::class.java)
