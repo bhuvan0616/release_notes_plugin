@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ModuleRootManager
+import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.Messages
 import com.intellij.ui.components.JBBox
@@ -22,7 +23,7 @@ import javax.swing.JComponent
 import javax.swing.JPanel
 
 class ReleaseDialog(private val project: Project) : DialogWrapper(project, true) {
-    val root by lazy { ModuleRootManager.getInstance(ModuleManager.getInstance(project).modules[0]).contentRoots[0].path }
+    private val root by lazy { project.basePath }
 
     private val contentPanel = JPanel(GridLayout(2, 0)).apply {
         preferredSize = Dimension(600, 400)
@@ -84,7 +85,7 @@ class ReleaseDialog(private val project: Project) : DialogWrapper(project, true)
         try {
             val branch = (File(root) exec "git branch --show-current")
                     .replace("\n", "")
-                    .replace("/","_")
+                    .replace("/", "_")
             val ciPath = File("${root}/.ci")
             if (!ciPath.exists()) {
                 val isCreated = ciPath.mkdir()
@@ -99,12 +100,12 @@ class ReleaseDialog(private val project: Project) : DialogWrapper(project, true)
 
     private fun buildJsonString(): String {
         return Gson().toJson(
-            ReleaseNotesModel(
-                getFeaturesList(),
-                getBugsList(),
-                (File(root) exec "git config user.name").replace("\n", ""),
-                (File(root) exec "git config user.email").replace("\n", "")
-            )
+                ReleaseNotesModel(
+                        getFeaturesList(),
+                        getBugsList(),
+                        (File(root) exec "git config user.name").replace("\n", ""),
+                        (File(root) exec "git config user.email").replace("\n", "")
+                )
         )
     }
 
@@ -112,7 +113,7 @@ class ReleaseDialog(private val project: Project) : DialogWrapper(project, true)
         try {
             val branch = (File(root) exec "git branch --show-current")
                     .replace("\n", "")
-                    .replace("/","_")
+                    .replace("/", "_")
             val releaseNotes = File("${root}/.ci/${branch}_release.json")
             if (releaseNotes.exists()) {
                 val notes = Gson().fromJson(releaseNotes.readText(), ReleaseNotesModel::class.java)
@@ -136,8 +137,8 @@ class ReleaseDialog(private val project: Project) : DialogWrapper(project, true)
         val formatted = replace("\n", "").trim()
         return if (!formatted.isBlank()) {
             split("#")
-                .map { it.trim().replace("\n", "") }
-                .filter { !it.isBlank() }
+                    .map { it.trim().replace("\n", "") }
+                    .filter { !it.isBlank() }
         } else emptyList()
     }
 

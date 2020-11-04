@@ -1,34 +1,34 @@
 <idea-plugin>
-  <id>dev.bhuvan.release_notes</id>
-  <name>Release Notes Generator</name>
-  <version>1.1</version>
-  <vendor email="mail@bhuvan.dev" url="http://bhuvan.dev">Bhuvanesh</vendor>
+    <id>dev.bhuvan.release_notes</id>
+    <name>Release Notes Generator</name>
+    <version>1.2</version>
+    <vendor email="mail@bhuvan.dev" url="http://bhuvan.dev">Bhuvanesh</vendor>
 
-  <description><![CDATA[
-    Generate Release notes conveniently. Enter release notes for currently working branch. Should not include other branch changes. The release notes will be created under rootDir/.ci/{your_branch_name}.json
+    <description><![CDATA[Create release notes conveniently. It can be used to build release notes in CI.
+    The release notes will be created under rootDir/.ci/{your_branch_name}.json
     ]]></description>
 
-  <change-notes><![CDATA[
+    <change-notes><![CDATA[
       fixes error while creating release notes with a brach name has /
     ]]>
-  </change-notes>
+    </change-notes>
 
-  <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="173.0"/>
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="173.0"/>
 
-  <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <depends>com.intellij.modules.platform</depends>
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
 
-  <actions>
-    <action class="dev.bhuvan.action.CreateRelease" text="Create Release" description="Build release notes"
-            id="release_generator.create_release">
-      <add-to-group group-id="BuildMenu" anchor="last"/>
-    </action>
-  </actions>
+    <actions>
+        <action class="dev.bhuvan.action.CreateRelease" text="Create Release" description="Build release notes"
+                id="release_generator.create_release">
+            <add-to-group group-id="BuildMenu" anchor="last"/>
+        </action>
+    </actions>
 
 </idea-plugin>
