@@ -44,7 +44,7 @@ class ReleaseDialog(private val project: Project) : DialogWrapper(project, true)
 
     override fun createCenterPanel(): JComponent? {
         val featuresBlock = JPanel(BorderLayout())
-        val disclimer = JBLabel("Use # to seperate the lines.").apply {
+        val disclimer = JBLabel("Use * followed by space to separate the lines.").apply {
             fontColor = UIUtil.FontColor.NORMAL
             font = JBUI.Fonts.miniFont()
             border = JBUI.Borders.empty(5, 10)
@@ -117,8 +117,8 @@ class ReleaseDialog(private val project: Project) : DialogWrapper(project, true)
             val releaseNotes = File("${root}/.ci/${branch}_release.json")
             if (releaseNotes.exists()) {
                 val notes = Gson().fromJson(releaseNotes.readText(), ReleaseNotesModel::class.java)
-                featuresText.text = notes.features.joinToString("") { "# $it\n" }
-                bugsText.text = notes.bugs.joinToString("") { "# $it\n" }
+                featuresText.text = notes.features.joinToString("") { "* $it\n" }
+                bugsText.text = notes.bugs.joinToString("") { "* $it\n" }
             }
         } catch (e: Exception) {
             Messages.showDialog(project, e.message, "Unable to save release notes", arrayOf("OK"), 0, null)
@@ -136,7 +136,7 @@ class ReleaseDialog(private val project: Project) : DialogWrapper(project, true)
     private fun String.parseList(): List<String> {
         val formatted = replace("\n", "").trim()
         return if (!formatted.isBlank()) {
-            split("#")
+            split("* ")
                     .map { it.trim().replace("\n", "") }
                     .filter { !it.isBlank() }
         } else emptyList()

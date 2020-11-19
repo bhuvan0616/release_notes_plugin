@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.bhuvan.release_notes</id>
     <name>Release Notes Generator</name>
-    <version>1.2</version>
+    <version>1.3</version>
     <vendor email="mail@bhuvan.dev" url="http://bhuvan.dev">Bhuvanesh</vendor>
 
     <description><![CDATA[Create release notes conveniently. It can be used to build release notes in CI.
